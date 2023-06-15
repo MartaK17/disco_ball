@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import Tk
 from tkinter import filedialog
 from pygame import mixer
+import pygame
 
 # Create a GUI window
 root = Tk()
@@ -12,23 +13,36 @@ root.geometry("920x600+290+85")
 root.configure(background='#212121')
 root.resizable(False, False)
 mixer.init()
+#pygame.display.init()
 
-
+playlist = []
 
 # Create a function to open a file
 def AddMusic():
-    path = filedialog.askdirectory()
+    path = "/home/ubuntu/Downloads/"
     if path:
         os.chdir(path)
         songs = os.listdir(path)
         for song in songs:
             if song.endswith(".mp3"):
-                Playlist.insert(END, song)
+                playlist.append(song)
 def PlayMusic():
-    Music_Name = Playlist.get(ACTIVE)
-    print(Music_Name[0:-4])
-    mixer.music.load(Playlist.get(ACTIVE))
-    mixer.music.play()
+    
+    print(playlist)
+    music = playlist
+    #mixer.music.load(playlist.pop())
+    #mixer.music.queue(playlist.pop())
+    #mixer.music.set_endevent(pygame.USEREVENT)
+    #mixer.music.play()
+    for i in music:
+        mixer.music.load(i-1)
+        mixer.music.play()
+#while True:
+#    for event in pygame.event.get():
+#        if event.type == pygame.USEREVENT:    # A track has ended
+#            if len ( playlist ) > 0:       # If there are more tracks in the queue...
+#                pygame.mixer.music.queue ( playlist.pop() ) # Q
+
 
 # icon
 image_icon = PhotoImage(file="/home/ubuntu/Downloads/duck.png")
