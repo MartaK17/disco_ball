@@ -13,7 +13,6 @@ root.geometry("920x600+290+85")
 root.configure(background='#212121')
 root.resizable(False, False)
 mixer.init()
-#pygame.display.init()
 
 playlist = []
 
@@ -30,18 +29,9 @@ def PlayMusic():
     
     print(playlist)
     music = playlist
-    #mixer.music.load(playlist.pop())
-    #mixer.music.queue(playlist.pop())
-    #mixer.music.set_endevent(pygame.USEREVENT)
-    #mixer.music.play()
     for i in music:
-        mixer.music.load(i-1)
+        mixer.music.load(i)
         mixer.music.play()
-#while True:
-#    for event in pygame.event.get():
-#        if event.type == pygame.USEREVENT:    # A track has ended
-#            if len ( playlist ) > 0:       # If there are more tracks in the queue...
-#                pygame.mixer.music.queue ( playlist.pop() ) # Q
 
 
 # icon
