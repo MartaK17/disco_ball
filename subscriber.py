@@ -6,6 +6,7 @@ import time
 import os
 from musicplayer import playmusic
 
+playlist = []
 # The callback function of connection
 
 def on_connect(client, userdata, flags, rc):
@@ -20,6 +21,15 @@ def on_message(client, userdata, msg):
         state = "ON"
         client.publish('zigbee2mqtt/0x385b44fffe164f57/set', payload=state, qos=0, retain=False)
         playmusic()
+
+        for event in pygame.event.get():
+            if event.type == pygame.USEREVENT:    # A track has ended
+                print(playlist)
+                if len ( playlist ) > 0:       # If there are more tracks in the queue...
+                    pygame.mixer.music.queue ( playlist.pop() ) # Q
+
+
+
     elif dictionary["action"] == "on":
         state = "OFF"
         client.publish('zigbee2mqtt/0x385b44fffe164f57/set', payload=state, qos=0, retain=False)
@@ -29,9 +39,6 @@ def subscribe():
     #
     pygame.display.init()
     screen = pygame.display.set_mode ( ( 420 , 240 ) )
-    playlist = []
-
-
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
