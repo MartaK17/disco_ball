@@ -22,23 +22,19 @@ def on_message(client, userdata, msg):
         client.publish('zigbee2mqtt/0x385b44fffe164f57/set', payload=state, qos=0, retain=False)
         playmusic()
 
-        for event in pygame.event.get():
-            if event.type == pygame.USEREVENT:    # A track has ended
-                print(playlist)
-                if len ( playlist ) > 0:       # If there are more tracks in the queue...
-                    pygame.mixer.music.queue ( playlist.pop() ) # Q
-
-
+#        for event in pygame.event.get():
+#            if event.type == pygame.USEREVENT:    # A track has ended
+#                if len ( playlist ) > 0:       # If there are more tracks in the queue...
+#                    pygame.mixer.music.queue ( playlist.pop() ) # Q
 
     elif dictionary["action"] == "on":
         state = "OFF"
         client.publish('zigbee2mqtt/0x385b44fffe164f57/set', payload=state, qos=0, retain=False)
         pygame.mixer.music.stop()
+        pygame.mixer.quit()
+        pygame.display.quit()
 def subscribe():
 
-    #
-    pygame.display.init()
-    screen = pygame.display.set_mode ( ( 420 , 240 ) )
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
