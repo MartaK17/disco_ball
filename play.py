@@ -8,7 +8,7 @@ import pygame
 
 # Create a GUI window
 root = Tk()
-root.title("Music Player")
+root.title("Party Maker")
 root.geometry("920x600+290+85")
 root.configure(background='#212121')
 root.resizable(False, False)
